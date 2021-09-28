@@ -1,0 +1,38 @@
+{
+  "name": "version-manage-webpack-plugin",
+  "version": "1.0.0",
+  "description": "webpack plugin for managing version details",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/zengdoc/version-manage-webpack-plugin.git"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "lib/",
+    "src/",
+    "src/index.js"
+  ],
+  "scripts": {
+    "build": "rollup --config rollup.config.js"
+  },
+  "keywords": [
+    "webpack",
+    "webpack-plugin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@rollup/plugin-alias": "^3.1.5",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-eslint": "^8.0.1",
+    "babel-eslint": "^10.1.0",
+    "rollup": "^2.57.0",
+    "webpack": "^4.46.0"
+  }
+}
