@@ -19,7 +19,9 @@ export default class VersionManageWebpackPlugin {
       // code indentation
       indent: 2,
       // version expiration time (seconds)
-      maxAge: 0
+      maxAge: 0,
+      // print version log
+      log: false
     }
     this.options = Object.assign(defaultOptions, userOptions)
   }
@@ -69,6 +71,10 @@ export default class VersionManageWebpackPlugin {
     })
     // general version file
     hooks.done(compiler, () => {
+      // print version information on the console
+      if (this.options.log) {
+        this.versionController.consoleLogVersionInfo(getAbsolutePath(this.options.entryFileName))
+      }
       // clear expired version
       clearExpiredVersion(this.versionController, this.options.maxAge)
       // update pkg version

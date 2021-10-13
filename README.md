@@ -25,6 +25,7 @@ yarn add --dev version-manage-webpack-plugin
 - 旧版本恢复。
 - 版本修订号自增加。
 - 清除过期版本（记录，资源文件）。
+- 控制台打印版本号。
 
 ## 用法
 
@@ -34,6 +35,7 @@ const VersionManageWebpackPlugin = require('version-manage-webpack-plugin')
 module.exports = {
   //...
   plugins: [
+    // 添加到结尾处
     new VersionManageWebpackPlugin()
   ]
 }
@@ -48,6 +50,7 @@ module.exports = {
 | **`autoIncVersion`** | `{Boolean}` |   `false`    | 版本修订号是否自增加                       |
 |     **`indent`**     | `{Number}`  |     `2`      | 代码缩进，修改package.json文件时使用       |
 |     **`maxAge`**     | `{Number}`  |     `0`      | 版本最大存储周期（秒）。始终保留上一个版本 |
+|      **`log`**       | `{Boolean}` |   `false`    | 访问时，控制台打印当前版本号               |
 
 ## 提示
 
