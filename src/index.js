@@ -1,7 +1,8 @@
 import fs from 'fs'
 import {
   getCurrentTimestamp,
-  exitProcess
+  exitProcess,
+  injectAssetsIntoHtml
 } from 'lib/utils'
 import PackageController from 'lib/package'
 import VersionController from 'lib/version'
@@ -71,14 +72,12 @@ export default class VersionManageWebpackPlugin {
     })
     // general version file
     hooks.done(compiler, () => {
-      // print version information on the console
-      if (this.options.log) {
-        this.versionController.consoleLogVersionInfo(getAbsolutePath(this.options.entryFileName))
-      }
       // clear expired version
       clearExpiredVersion(this.versionController, this.options.maxAge)
       // update pkg version
       this.packageController.writePkgVersion(this.versionController.currentVersion)
+      // modify entry html file
+      generateEntryHtmlFile(this.versionController, this.options)
       // ensure assets integrity
       generateVersionMapFile(this.versionController.versionMapSource)
       log.success(`Successfully compiled v${this.versionController.currentVersion}`)
@@ -134,7 +133,36 @@ export default class VersionManageWebpackPlugin {
      * @param source
      */
     function generateVersionMapFile(source) {
-      fs.writeFileSync(getAbsolutePath(CONSTANT.VERSION_FILE.FILE_NAME), JSON.stringify(source))
+      fs.writeFileSync(
+        getAbsolutePath(CONSTANT.VERSION_FILE.FILE_NAME),
+        JSON.stringify(source)
+      )
+    }
+    function generateEntryHtmlFile(versionController, options) {
+      if (!options.log) {
+        return
+      }
+      const { currentVersion, versionMapSource } = versionController
+      const currentVersionMapSource = versionMapSource[currentVersion]
+      let currentVersionEntryFileSource = currentVersionMapSource[CONSTANT.VERSION_MAP.ENTRY_FILE_SOURCE]
+
+      // insert the version log into the entry html source
+      if (options.log) {
+        currentVersionEntryFileSource = injectAssetsIntoHtml(
+          currentVersionEntryFileSource,
+          {
+            body: [
+              `<script>console.log("Current version: ${currentVersion}")</script>`
+            ]
+          })
+      }
+      // sync version map file
+      versionController.versionMapSource[currentVersion][CONSTANT.VERSION_MAP.ENTRY_FILE_SOURCE] = currentVersionEntryFileSource
+      // sync entry file
+      fs.writeFileSync(
+        getAbsolutePath(options.entryFileName),
+        currentVersionEntryFileSource
+      )
     }
     function clearExpiredVersion(versionController, maxAge) {
       const expiredVersionList = versionController.clearExpiredVersion(maxAge)
