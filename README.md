@@ -3,11 +3,21 @@
 
 # version-manage-webpack-plugin
 
-> 根据package.json的版本号对打包资源进行管理，实现非覆盖式发布。
+> Manage packaged resources according to the version number of package.json to achieve non-coverage release versions.
+
+English | [简体中文](./README-zh.md)
 
 ---
 
-## 安装
+## Features
+
+- Version and resource directory management.（dist/version-manage.json）
+- revert the old version.
+- The version patch number is incremented.
+- Clear outdated versions (records, resource files).
+- The console prints the version number.
+
+## Install
 
 ```
 npm i --save-dev version-manage-webpack-plugin
@@ -17,17 +27,7 @@ npm i --save-dev version-manage-webpack-plugin
 yarn add --dev version-manage-webpack-plugin
 ```
 
-
-
-## 功能
-
-- 版本与资源目录管理。（dist/version-manage.json）
-- 旧版本恢复。
-- 版本修订号自增加。
-- 清除过期版本（记录，资源文件）。
-- 控制台打印版本号。
-
-## 用法
+## Usage
 
 ```js
 const VersionManageWebpackPlugin = require('version-manage-webpack-plugin')
@@ -35,28 +35,28 @@ const VersionManageWebpackPlugin = require('version-manage-webpack-plugin')
 module.exports = {
   //...
   plugins: [
-    // 添加到结尾处
+    // add to the end
     new VersionManageWebpackPlugin()
   ]
 }
 ​```
 ```
 
-## 参数
+## Parameters
 
-|         字段         |    类型     |    默认值    | 描述                                       |
-| :------------------: | :---------: | :----------: | :----------------------------------------- |
-| **`entryFileName`**  | `{String}`  | `index.html` | Html入口文件                               |
-| **`autoIncVersion`** | `{Boolean}` |   `false`    | 版本修订号是否自增加                       |
-|     **`indent`**     | `{Number}`  |     `2`      | 代码缩进，修改package.json文件时使用       |
-|     **`maxAge`**     | `{Number}`  |     `0`      | 版本最大存储周期（秒）。始终保留上一个版本 |
-|      **`log`**       | `{Boolean}` |   `false`    | 访问时，控制台打印当前版本号               |
+|        Field         |    Type     |   Default    | Description                                                  |
+| :------------------: | :---------: | :----------: | :----------------------------------------------------------- |
+| **`entryFileName`**  | `{String}`  | `index.html` | The file to write the HTML to. Defaults to `index.html`. You can specify a subdirectory here too (eg: `assets/admin.html`). |
+| **`autoIncVersion`** | `{Boolean}` |   `false`    | Whether the version patch number is self-incrementing        |
+|     **`indent`**     | `{Number}`  |     `2`      | Code indentation, used when modifying the package.json file  |
+|     **`maxAge`**     | `{Number}`  |     `0`      | Version maximum storage period (seconds). Always keep the previous version |
+|      **`log`**       | `{Boolean}` |   `false`    | When visiting a webpage, the console prints the current version number |
 
-## 提示
+## Tips
 
-- 通过手动修改package.json版本号恢复旧版本。
-- 生产环境构建时使用。
-- 关闭脚手架构建前清除打包目录功能。
+- Restore the old version by manually modifying the package.json version number.
+- Used for production environment.
+- Turn off the ability to clear the package directory before scaffolding builds.
 
 
 
