@@ -3,7 +3,7 @@
 
 # version-manage-webpack-plugin
 
-> Manage packaged resources according to the version number of package.json to achieve non-coverage release versions.
+> A webpack plugin for better manage packaged resources according to the version number of package.json to achieve non-coverage release versions.
 
 English | [简体中文](./README-zh.md)
 
